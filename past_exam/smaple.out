@@ -1,0 +1,15 @@
+af 10
+af 1
+af -1
+af 4
+weight = 5
+main ingredient = abc
+bf 3
+----- Active Ingredient begin   -----
+4 abc
+4 asdkj
+----- end                       -----
+----- Inactive Ingredient begin -----
+3 agc
+----- end                       -----
+weight = 8

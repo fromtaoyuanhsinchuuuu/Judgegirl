@@ -25,7 +25,7 @@ void structure_into_html(Student *a,char HTML_file[FILENAME])
 int main(void)
 {
     char bin_file[FILENAME],HTML_file[FILENAME];
-    scanf("%s %s",bin_file,HTML_file);
+    scanf("%s %s", bin_file, HTML_file);
 
     FILE *fp = fopen(bin_file,"rb");
     assert(fp != NULL);
@@ -41,10 +41,11 @@ int main(void)
     Student a;
 
     // printf("name:%s\n",a.name);
+    char content[500];
     while(fread(&a,sizeof(Student),1,fp) == 1){
         // fwrite(&a,sizeof(Student),1,fp2);
-        sprintf(HTML_file, "<tr>\n<td>%s</td>\n<td>%d</td>\n<td>%s</td>\n<td>%f, %f, %f, %f</td>\n<td>%d, %d, %d</td>\n</tr>\n",a.name,a.id,a.phone,a.grade[0],a.grade[1],a.grade[2],a.grade[3],a.birth_year,a.birth_month,a.birth_day);
-        fputs(HTML_file,fp2);
+        sprintf(content, "<tr>\n<td>%s</td>\n<td>%d</td>\n<td>%s</td>\n<td>%f, %f, %f, %f</td>\n<td>%d, %d, %d</td>\n</tr>\n",a.name,a.id,a.phone,a.grade[0],a.grade[1],a.grade[2],a.grade[3],a.birth_year,a.birth_month,a.birth_day);
+        fputs(content, fp2);
         // fwrite(HTML_file,sizeof(HTML_file),1,fp2);
     }
 

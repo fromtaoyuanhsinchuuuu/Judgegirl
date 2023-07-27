@@ -8,18 +8,19 @@
 
 // #ifndef HEAP_H
 // #define HEAP_H
-#define MAXHEAP 10
+#define MAXHEAP 100
  
 struct Heap{
-    int ary[MAXHEAP]; // from 1
+    int ary[MAXHEAP]; // from 0
     int num;
 };
 
 int min_index(struct Heap *heap, int i)
 {
-    int minIndex = i, left = 2 * i, right = 2 * i + 1;
-    if (left <= heap->num && heap->ary[minIndex] > heap->ary[left]) minIndex = left;
-    if (right <= heap->num && heap->ary[minIndex] > heap->ary[right]) minIndex = right;
+    int minIndex = i, left = 2 * i + 1;
+    int right = left + 1;
+    if (left + 1 <= heap->num && heap->ary[minIndex] > heap->ary[left]) minIndex = left;
+    if (right + 1 <= heap->num && heap->ary[minIndex] > heap->ary[right]) minIndex = right;
     return minIndex;
 }
 
@@ -34,8 +35,8 @@ void swap(int ary[], int i, int j)
 void upheap(struct Heap *heap, int i)
 {
     while (1){
-        if (i == 1) break;
-        int parentIndex = i / 2;
+        if (i == 0) break;
+        int parentIndex = (i % 2 == 0)? (i - 1) / 2: i / 2;
         // if (parentIndex == 0) break;
         if (heap->ary[parentIndex] >= heap->ary[i]) swap(heap->ary, i, parentIndex);
         else break;
@@ -46,7 +47,7 @@ void upheap(struct Heap *heap, int i)
 
 void dowHeap(struct Heap *heap)
 {
-    int i = 1;
+    int i = 0;
     while (1){
         int minIndex = min_index(heap, i);
         // printf("minIndex:%d\n", minIndex);
@@ -67,15 +68,15 @@ void initialize(struct Heap *heap)
 
 int removeMin(struct Heap *heap)
 {
-    int min = heap->ary[1];
-    heap->ary[1] = heap->ary[heap->num--];
+    int min = heap->ary[0];
+    heap->ary[0] = heap->ary[--(heap->num)];
     dowHeap(heap);
     return min;
 }
 void add(struct Heap *heap, int i)
 {
-    heap->ary[++(heap->num)] = i;
-    upheap(heap, heap->num);
+    heap->ary[(heap->num)++] = i;
+    upheap(heap, heap->num - 1);
 }
 int isFull(struct Heap *heap)
 {

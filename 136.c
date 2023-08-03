@@ -34,31 +34,21 @@ int main(void)
     assert(fp2 != NULL);
 
     char non_sense_words[] = "<table border=\"1\">\n<tbody>\n";
-    // printf("%s",non_sense_words);
     fputs(non_sense_words,fp2);
-    // fwrite(non_sense_words,sizeof(non_sense_words),1,fp2);
 
     Student a;
 
-    // printf("name:%s\n",a.name);
     char content[500];
     while(fread(&a,sizeof(Student),1,fp) == 1){
-        // fwrite(&a,sizeof(Student),1,fp2);
         sprintf(content, "<tr>\n<td>%s</td>\n<td>%d</td>\n<td>%s</td>\n<td>%f, %f, %f, %f</td>\n<td>%d, %d, %d</td>\n</tr>\n",a.name,a.id,a.phone,a.grade[0],a.grade[1],a.grade[2],a.grade[3],a.birth_year,a.birth_month,a.birth_day);
         fputs(content, fp2);
-        // fwrite(HTML_file,sizeof(HTML_file),1,fp2);
     }
 
     fclose(fp);
+
     char non_sense_word[] = "</tbody>\n</table>\n";
-
-    // fwrite(non_sense_word,sizeof(non_sense_word),1,fp2);
     fputs(non_sense_word,fp2);
-    // fwrite(non_sense_word,sizeof(non_sense_word),1,fp2);
     fclose(fp2);
-
-    // printf("%s",non_sense_word);
-
     
     return 0;
 }

@@ -37,9 +37,8 @@ void init()
     }
 }
 
-int hash_func(char *str, int K)
+int hash_func(char *str, int K, int len)
 {
-    int len = strlen(str);
 
     int hash_num = 0;
     for (int i = 0; i < len; i++){
@@ -52,26 +51,26 @@ int hash_func(char *str, int K)
 
 void InsertToHashtable(char *str, int index)
 {
-    int hashIndex = hash_func(str, K);
-
     int len = strlen(str);
+    int hashIndex = hash_func(str, K, len);
+
     for (int i = 0; i < C; i++){
         if (hash_table[hashIndex][i].num == 0){
             for (int j = 0; j < len; j++){
                 hash_table[hashIndex][i].str[j] = str[j];
             }
-            // strcpy(hash_table[hashIndex][i].str, str);
-    //         hash_table[hashIndex][i].num = 1;
-    //         hash_table[hashIndex][i].index = index;
+            strcpy(hash_table[hashIndex][i].str, str);
+            hash_table[hashIndex][i].num = 1;
+            hash_table[hashIndex][i].index = index;
             return;
         }
-        // else if (!strcmp(hash_table[hashIndex][i].str, str)){
-    //         ansIndex1 = index;
-    //         ansIndex2 = hash_table[hashIndex][i].index;
-    //         strcpy(ansSTR, str);
-    //         hash_table[hashIndex][i].num = 0;
-    //         return;
-        // }
+        else if (!strcmp(hash_table[hashIndex][i].str, str)){
+            ansIndex1 = index;
+            ansIndex2 = hash_table[hashIndex][i].index;
+            strcpy(ansSTR, str);
+            hash_table[hashIndex][i].num = 0;
+            return;
+        }
     }
     return;
 }
@@ -100,35 +99,37 @@ int main(void)
 
     getTower(N);
 
-    // for (int i = 0; i < N; i++){
-    //     for (int j = 0; j < N; j++){
-    //         printf("%d%c", z_Index[i * N + j], " \n"[j == N - 1]);
-    //     }
-    // }
+    for (int i = 0; i < N; i++){
+        for (int j = 0; j < N; j++){
+            printf("%d%c", z_Index[i * N + j], " \n"[j == N - 1]);
+        }
+    }
+
+    printf("%s\n", ansSTR);
 
 
-    // while(1){
-    //     // printf("Index1:%d, Index2:%d\n", ansIndex1, ansIndex2);
-    //     if (ansIndex1 == -1 || ansIndex2 == -1) break;
-    //     int prev_ansIndex1 = ansIndex1, prev_ansIndex2 = ansIndex2;
-    //     printf("%s\n", ansSTR);
-    //     // printf("ansSTR:%s\n", ansSTR);
-    //     z_Index[ansIndex1]++, z_Index[ansIndex2]++;
-    //     int row1 = ansIndex1 / N, col1 = ansIndex1 % N;
-    //     int row2 = ansIndex2 / N, col2 = ansIndex2 % N;
-    //     // printf("(%d,%d,%d)\n", row2, col2, z_Index[prev_ansIndex2]);
+    while(1){
+        // printf("Index1:%d, Index2:%d\n", ansIndex1, ansIndex2);
+        if (ansIndex1 == -1 || ansIndex2 == -1) break;
+        int prev_ansIndex1 = ansIndex1, prev_ansIndex2 = ansIndex2;
+        printf("%s\n", ansSTR);
+        // printf("ansSTR:%s\n", ansSTR);
+        z_Index[ansIndex1]++, z_Index[ansIndex2]++;
+        int row1 = ansIndex1 / N, col1 = ansIndex1 % N;
+        int row2 = ansIndex2 / N, col2 = ansIndex2 % N;
+        // printf("(%d,%d,%d)\n", row2, col2, z_Index[prev_ansIndex2]);
 
-    //     ansIndex1 = -1, ansIndex2 = -1;
-    //     if (z_Index[prev_ansIndex1] < N){
-    //         // printf("str1:insert %s\n", tower[row1][col1][z_Index[prev_ansIndex1]]);
-    //         InsertToHashtable(tower[row1][col1][z_Index[prev_ansIndex1]], prev_ansIndex1);
-    //     }
-    //     if (z_Index[prev_ansIndex2] < N){
-    //         // printf("(%d,%d,%d)\n", row2, col2, z_Index[prev_ansIndex2]);
-    //         // printf("str2:insert %s\n", tower[row2][col2][z_Index[prev_ansIndex2]]);
-    //         InsertToHashtable(tower[row2][col2][z_Index[prev_ansIndex2]], prev_ansIndex2);
-    //     }
-    // }
+        ansIndex1 = -1, ansIndex2 = -1;
+        if (z_Index[prev_ansIndex1] < N){
+            // printf("str1:insert %s\n", tower[row1][col1][z_Index[prev_ansIndex1]]);
+            InsertToHashtable(tower[row1][col1][z_Index[prev_ansIndex1]], prev_ansIndex1);
+        }
+        if (z_Index[prev_ansIndex2] < N){
+            // printf("(%d,%d,%d)\n", row2, col2, z_Index[prev_ansIndex2]);
+            // printf("str2:insert %s\n", tower[row2][col2][z_Index[prev_ansIndex2]]);
+            InsertToHashtable(tower[row2][col2][z_Index[prev_ansIndex2]], prev_ansIndex2);
+        }
+    }
     
     return 0;
 }

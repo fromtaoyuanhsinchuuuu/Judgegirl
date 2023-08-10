@@ -8,18 +8,7 @@
 #define MAXSTR 16
 int main(void)
 {
-    char str[MAXSTR];
-    scanf("%s",str);
-
-    FILE *fp = fopen(str,"rb");
-    assert(fp != NULL);
-
-    int a;
-    while (!feof(fp)){
-        fread(&a,sizeof(int),1,fp);
-        printf("%d ",a);
-    }
-
+    printf("%c", ('a' + 'c') / 2);
 
 
    
